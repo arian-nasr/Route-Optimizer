@@ -41,4 +41,4 @@ def route():
     return data
 
 if __name__ == '__main__':
-    app.run(host="192.168.0.21")
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
