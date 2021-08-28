@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_sslify import SSLify
 import requests
 import os
 
@@ -19,6 +20,7 @@ limiter = Limiter(
     default_limits=["100 per day", "1 per second"]
 )
 app.config.from_object(__name__)
+sslify = SSLify(app)
 
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
@@ -41,4 +43,4 @@ def route():
     return data
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+    app.run(ssl_context='adhoc', debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
